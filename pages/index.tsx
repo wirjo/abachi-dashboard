@@ -8,10 +8,11 @@ import {
   useQuery,
   gql
 } from "@apollo/client";
+import LoadingBox from '../components/LoadingBox';
 
 const Home = () : JSX.Element => {
 
-  const { loading, error, data } = useQuery(gql`
+  const { loading, data } = useQuery(gql`
     query {
       protocolMetrics(first: 1, orderBy: timestamp, orderDirection: desc) {
         ohmPrice
@@ -28,7 +29,9 @@ const Home = () : JSX.Element => {
   const backingPerOhm = Math.round(metrics?.treasuryMarketValue / metrics?.ohmCirculatingSupply * 100)/100;
   const ohmPrice = Math.round(metrics?.ohmPrice * 100)/100;
 
-  return (
+
+
+    return (
       <div>
         <div className="py-10">
           <div className="container px-5 mx-auto max-w-screen-lg">
@@ -37,46 +40,49 @@ const Home = () : JSX.Element => {
               Abachi (3²,3²) backed by OHM 
             </div>
 
-            <div className="grid md:grid-cols-2 gap-10">
+            { loading ? <LoadingBox/> :
 
-              <div className="bg-white text-gray-900 shadow rounded-lg py-10 px-20 text-xl text-center mb-5">
-                <div className="mb-3">
-                  OHM Price
+              <div className="grid md:grid-cols-2 gap-10">
+
+                <div className="bg-white text-gray-900 shadow rounded-lg py-10 px-20 text-xl text-center mb-5">
+                  <div className="mb-3">
+                    OHM Price
+                  </div>
+                  <div className="text-3xl fold-bold">
+                    ${ohmPrice.toLocaleString()}
+                  </div>
                 </div>
-                <div className="text-3xl fold-bold">
-                  ${ohmPrice.toLocaleString()}
+
+                <div className="bg-white text-gray-900 shadow rounded-lg py-10 px-20 text-xl text-center mb-5">
+                  <div className="mb-3">
+                    Backing per OHM
+                  </div>
+                  <div className="text-3xl fold-bold">
+                    ${backingPerOhm.toLocaleString()}
+                  </div>
                 </div>
+
+                <div className="bg-white text-gray-900 shadow rounded-lg py-10 px-20 text-xl text-center mb-10">
+                  <div className="mb-3">
+                    Treasury Market Value
+                  </div>
+                  <div className="text-3xl fold-bold">
+                    ${treasuryMarketValue.toLocaleString()}
+                  </div>
+                </div>
+
+                <div className="bg-white text-gray-900 shadow rounded-lg py-10 px-20 text-xl text-center mb-10">
+                  <div className="mb-3">
+                    Circulating Supply
+                  </div>
+                  <div className="text-3xl fold-bold">
+                    {ohmCirculatingSupply.toLocaleString()}
+                  </div>
+                </div>
+
+
               </div>
-
-              <div className="bg-white text-gray-900 shadow rounded-lg py-10 px-20 text-xl text-center mb-5">
-                <div className="mb-3">
-                  Backing per OHM
-                </div>
-                <div className="text-3xl fold-bold">
-                  ${backingPerOhm.toLocaleString()}
-                </div>
-              </div>
-
-              <div className="bg-white text-gray-900 shadow rounded-lg py-10 px-20 text-xl text-center mb-10">
-                <div className="mb-3">
-                  Treasury Market Value
-                </div>
-                <div className="text-3xl fold-bold">
-                  ${treasuryMarketValue.toLocaleString()}
-                </div>
-              </div>
-
-              <div className="bg-white text-gray-900 shadow rounded-lg py-10 px-20 text-xl text-center mb-10">
-                <div className="mb-3">
-                  Circulating Supply
-                </div>
-                <div className="text-3xl fold-bold">
-                  {ohmCirculatingSupply.toLocaleString()}
-                </div>
-              </div>
-
-
-            </div>
+            }
 
           </div>
         </div>
