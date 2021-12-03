@@ -1,0 +1,36 @@
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Common Elements */
+
+body {
+    font-family: "Raleway", serif;
+    background-color: #222;
+    color: #000
+}
+
+.heading {
+    background-clip: initial;
+    background: linear-gradient(270deg,#fff4f4 .41%,#ffbcbc 11.85%,#b6b2ed 42.14%,#fba994 70.87%,#fcefef);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-text { color: #888; }
+
+.socials > div {
+    text-align: center;
+}
+
+.socials > div a {
+    display: block;
+    padding: 8px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255,0.2);
+}
+
+.socials > div a:hover {
+    background-color: #000;
+}
